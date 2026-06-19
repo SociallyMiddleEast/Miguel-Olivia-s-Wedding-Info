@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Miguel &amp; Olivia — Guest Info</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%231c1510'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia%2C serif' font-style='italic' font-size='22' fill='%23c9a84c' letter-spacing='1'%3EM%26O%3C/text%3E%3C/svg%3E"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#faf7f2;
+  --cream2:#f2ede4;
+  --stone:#e8e0d2;
+  --bark:#b8a98a;
+  --brown:#7a6248;
+  --dark:#1c1510;
+  --text:#2a1f14;
+  --text2:#6b5c47;
+  --gold:#c9a84c;
+  --gold2:#e8cc7a;
+  --white:#ffffff;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content:'';
+  position:fixed;inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+  opacity:0.4;
+}
+
+/* ── HEADER ── */
+header {
+  text-align: center;
+  padding: clamp(40px, 8vh, 72px) 24px clamp(24px, 4vh, 40px);
+  position: relative;
+  z-index: 1;
+}
+
+.ornament {
+  display: block;
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, var(--bark), transparent);
+  margin: 0 auto 24px;
+}
+
+.header-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.header-names {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2.8rem, 8vw, 4.8rem);
+  color: var(--text);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.header-ampersand {
+  color: var(--gold);
+  font-weight: 400;
+}
+
+.header-date {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  color: var(--text2);
+  text-transform: uppercase;
+  margin-top: 14px;
+}
+
+.header-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 28px auto 0;
+  max-width: 240px;
+}
+.header-divider span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--bark));
+}
+.header-divider span:last-child {
+  background: linear-gradient(to left, transparent, var(--bark));
+}
+.header-divider em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--gold);
+}
+
+/* ── WELCOME TEXT ── */
+.welcome {
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+  position: relative;
+  z-index: 1;
+}
+.welcome p {
+  font-size: 0.9rem;
+  color: var(--text2);
+  line-height: 1.85;
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+}
+
+/* ── CARDS GRID ── */
+.cards {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid rgba(184,169,138,0.25);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: box-shadow 0.3s, transform 0.3s;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.6s forwards;
+}
+.card:nth-child(1){animation-delay:0.05s}
+.card:nth-child(2){animation-delay:0.15s}
+.card:nth-child(3){animation-delay:0.25s}
+.card:nth-child(4){animation-delay:0.35s}
+.card:nth-child(5){animation-delay:0.45s}
+.card:nth-child(6){animation-delay:0.55s}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card:hover {
+  box-shadow: 0 8px 32px rgba(42,31,20,0.08);
+  transform: translateY(-2px);
+}
+
+.card-inner {
+  padding: 24px 28px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.card-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--cream2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  border: 1px solid rgba(184,169,138,0.3);
+}
+
+.card-body {
+  flex: 1;
+}
+
+.card-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.card-detail {
+  font-size: 0.82rem;
+  color: var(--text2);
+  line-height: 1.65;
+}
+
+.card-detail strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ── MAP BUTTON ── */
+.map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  padding: 9px 18px;
+  background: var(--text);
+  color: var(--cream);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+.map-btn:hover { background: var(--brown); }
+.map-btn svg {
+  width: 12px; height: 12px;
+  fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ── WHATSAPP BUTTON ── */
+.wa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  padding: 9px 18px;
+  background: #25d366;
+  color: #fff;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+.wa-btn:hover { background: #1ebe5d; }
+
+/* ── TIMELINE STRIP (inside schedule card) ── */
+.timeline {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.tl-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(184,169,138,0.15);
+}
+.tl-item:last-child { border-bottom: none; }
+.tl-time {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  min-width: 56px;
+  padding-top: 2px;
+}
+.tl-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid var(--bark);
+  background: var(--cream);
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.tl-label {
+  font-size: 0.82rem;
+  color: var(--text);
+}
+.tl-sub {
+  font-size: 0.75rem;
+  color: var(--text2);
+}
+
+/* ── DRESS COLOR SWATCHES ── */
+.swatches {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--text2);
+}
+.swatch-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 0 24px 48px;
+  position: relative;
+  z-index: 1;
+}
+.footer-line {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 auto 24px;
+  max-width: 200px;
+}
+.footer-line span {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, transparent, var(--bark));
+}
+.footer-line span:last-child {
+  background: linear-gradient(to left, transparent, var(--bark));
+}
+.footer-line em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--bark);
+}
+.footer-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--bark);
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <span class="ornament"></span>
+  <p class="header-label">You are invited</p>
+  <h1 class="header-names">
+    Miguel <span class="header-ampersand">&amp;</span> Olivia
+  </h1>
+  <p class="header-date">Sunday · August 9, 2026 · Lebanon</p>
+  <div class="header-divider">
+    <span></span><em>✦</em><span></span>
+  </div>
+</header>
+
+<!-- WELCOME -->
+<div class="welcome">
+  <p>We are so glad you are joining us on this special day. Here is everything you need to celebrate with us.</p>
+</div>
+
+<!-- CARDS -->
+<div class="cards">
+
+  <!-- CEREMONY -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-icon">⛪</div>
+      <div class="card-body">
+        <p class="card-label">Ceremony</p>
+        <p class="card-title">Lady of Resurrection Church</p>
+        <p class="card-detail">
+          Maronite Patriarchate — Bkerke<br/><br/>
+          <strong>Date:</strong> Sunday, August 9, 2026<br/>
+          <strong>Time:</strong> 6:00 PM<br/>
+          <strong>Location:</strong> Bkerke, Mount Lebanon
+        </p>
+        <a class="map-btn" href="https://maps.app.goo.gl/b3voKgywEQiyXXDdA?g_st=ic" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          View on Maps
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECEPTION -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-icon">🥂</div>
+      <div class="card-body">
+        <p class="card-label">Reception</p>
+        <p class="card-title">Le Royaume — Kleiaat</p>
+        <p class="card-detail">
+          <strong>Date:</strong> Sunday, August 9, 2026<br/>
+          <strong>Time:</strong> 7:45 PM (Welcome Drinks)
+          <strong>Location:</strong> Kleiaat, North Lebanon
+        </p>
+        <a class="map-btn" href="https://maps.app.goo.gl/11X3g4rJ6YWCLyrf9" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          View on Maps
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-icon">🕐</div>
+      <div class="card-body">
+        <p class="card-label">Day Schedule</p>
+        <p class="card-title">Timeline</p>
+        <div class="timeline">
+          <div class="tl-item">
+            <span class="tl-time">6:00 PM</span>
+            <span class="tl-dot"></span>
+            <div>
+              <div class="tl-label">Wedding Ceremony</div>
+              <div class="tl-sub">Bkerke Church</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">7:45 PM</span>
+            <span class="tl-dot"></span>
+            <div>
+              <div class="tl-label">Welcome Drink</div>
+              <div class="tl-sub">Le Royaume — Kleiaat</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-time">8:30 PM</span>
+            <span class="tl-dot"></span>
+            <div>
+              <div class="tl-label">Dinner</div>
+              <div class="tl-sub">Dancing &amp; celebration</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GIFT -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-icon">🎁</div>
+      <div class="card-body">
+        <p class="card-label">Gift Registry</p>
+        <p class="card-title">Gifts</p>
+        <p class="card-detail" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;line-height:1.9;color:var(--text2)">
+          Your presence at our wedding is the greatest honor<br/>and gift we could receive.<br/><br/>
+          For those who kindly wish to offer a gift,<br/>
+          <span style="font-style:normal;font-family:'Jost',sans-serif;font-size:0.82rem;letter-spacing:0.04em;color:var(--text)"><strong>Whish Account — 03 368 858</strong></span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-icon">💬</div>
+      <div class="card-body">
+        <p class="card-label">Questions?</p>
+        <p class="card-title">Get in Touch</p>
+        <p class="card-detail">
+          For any questions about the day, feel free to reach us on WhatsApp.
+        </p>
+        <a class="wa-btn" href="https://wa.me/96181369085" target="_blank" rel="noopener">
+          WhatsApp Us
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-line">
+    <span></span><em>✦</em><span></span>
+  </div>
+  <p class="footer-text">With love, Miguel &amp; Olivia · August 9, 2026</p>
+</footer>
+
+</body>
+</html>
