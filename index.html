@@ -983,8 +983,8 @@ footer {
           <label for="rsvpAttending">Will you be attending?</label>
           <select id="rsvpAttending" name="attending" required>
             <option value="" disabled selected>Please choose</option>
-            <option value="Yes">Joyfully accept</option>
-            <option value="No">Regretfully decline</option>
+            <option value="yes">Joyfully accept</option>
+            <option value="no">Regretfully decline</option>
           </select>
         </div>
 
@@ -1056,7 +1056,7 @@ footer {
 
   if (attendingSelect && guestsField) {
     attendingSelect.addEventListener('change', () => {
-      guestsField.style.display = attendingSelect.value === 'No' ? 'none' : 'flex';
+      guestsField.style.display = attendingSelect.value === 'no' ? 'none' : 'flex';
     });
   }
 
@@ -1067,22 +1067,23 @@ footer {
       submitBtn.disabled = true;
       rsvpStatus.textContent = 'Sending...';
 
-      const formData = new FormData(rsvpForm);
-      const params = new URLSearchParams();
-      for (const [key, value] of formData.entries()) {
-        params.append(key, value);
-      }
-      params.append('timestamp', new Date().toISOString());
+      const payload = {
+        name: document.getElementById('rsvpName').value.trim(),
+        attending: document.getElementById('rsvpAttending').value,
+        guestCount: document.getElementById('rsvpGuests').value || '1',
+        message: document.getElementById('rsvpNote').value.trim()
+      };
 
       try {
-        // Google Apps Script web apps generally don't return readable
-        // CORS responses to fetch, so we submit in no-cors mode and
-        // treat a completed request (no network error) as success.
+        // Apps Script web apps don't support CORS preflight, so we send
+        // the JSON as a "simple" text/plain request (no-cors) — this is
+        // the standard workaround. The script itself reads it fine via
+        // JSON.parse(e.postData.contents) since it ignores content-type.
         await fetch(RSVP_ENDPOINT, {
           method: 'POST',
           mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: params.toString()
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
         });
 
         rsvpForm.style.display = 'none';
