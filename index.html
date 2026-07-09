@@ -535,6 +535,52 @@ header {
   margin-top: 2px;
 }
 
+.divider-rule {
+  position: relative;
+  margin: clamp(48px, 7vw, 68px) 0 clamp(32px, 5vw, 44px);
+  padding-top: 28px;
+  border-top: 1px solid rgba(184,169,138,0.4);
+  text-align: center;
+}
+.divider-rule-label {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--cream2);
+  padding: 0 14px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.solo-block {
+  text-align: center;
+  max-width: 380px;
+  margin: 0 auto;
+}
+.solo-block p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text2);
+  line-height: 1.7;
+}
+.solo-block .acct {
+  display: inline-block;
+  margin-top: 8px;
+  font-style: normal;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  font-weight: 500;
+}
+
 .rsvp-rule {
   position: relative;
   margin: clamp(48px, 7vw, 68px) 0 clamp(32px, 5vw, 44px);
@@ -965,6 +1011,14 @@ footer {
       </div>
     </div>
 
+    <div class="divider-rule">
+      <span class="divider-rule-label">A Gift of Love</span>
+    </div>
+
+    <div class="solo-block">
+      <p>The greatest gift we could have is your presence, your laughter, your dancing, your joy filling the room.<br/>For those who wish to celebrate with something more, a contribution is warmly treasured —<br/><span class="acct">Whish Account — 30362565</span></p>
+    </div>
+
     <div class="rsvp-rule">
       <span class="rsvp-rule-label">Kindly RSVP</span>
     </div>
@@ -1009,17 +1063,13 @@ footer {
       </div>
     </div>
 
-    <div class="closing">
-      <div class="closing-item">
-        <p class="closing-label"><em>A Gift of Love</em></p>
-        <p>The greatest gift we could have is your presence, your laughter, your dancing, your joy filling the room.<br/>For those who wish to celebrate with something more, a contribution is warmly treasured —<br/><span class="acct">Whish Account — 30362565</span></p>
-      </div>
-      <div class="closing-divider"></div>
-      <div class="closing-item">
-        <p class="closing-label">Questions</p>
-        <p>For anything about the day,<br/>we're a message away.</p>
-        <a class="wa-link" href="https://wa.me/96181369085" target="_blank" rel="noopener">WhatsApp Us</a>
-      </div>
+    <div class="divider-rule">
+      <span class="divider-rule-label">Questions</span>
+    </div>
+
+    <div class="solo-block">
+      <p>For anything about the day,<br/>we're a message away.</p>
+      <a class="wa-link" href="https://wa.me/96181369085" target="_blank" rel="noopener">WhatsApp Us</a>
     </div>
   </div>
 </div>
